@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.gingerbeardman.mobygames</string>
+	<key>connections</key>
+	<dict>
+		<key>2D5FE2CB-4A50-4E55-A395-013A4C899A20</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>D4972D3B-101D-4599-AD76-AEBEC681A02D</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Matt Sephton</string>
+	<key>description</key>
+	<string>Extensive video game information searches</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Moby Games</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>keyword</key>
+				<string>{var:search_title_keyword}</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>script</key>
+				<string>API_KEY="{var:api_key}";
+
+RAW=$(curl --silent "https://api.mobygames.com/v1/games?api_key=${MG_API_KEY}&amp;title={query}")
+JSON=$(echo $RAW | tr "\n" " ");
+
+GAMES=$(echo $JSON | jq -r ' .games[] | "{\"uid\":\"\(.game_id)\",\"title\":\"\(.title)\",\"subtitle\":\"\(.platforms[].platform_name)\",\"arg\":\"\(.moby_url)\",\"quicklookurl\":\"\(.moby_url)\",\"text\":{\"copy\":\"\(.title) \(.moby_url)\"}}" ' );
+
+#ALTS=$(echo $JSON | jq -r ' .games[].alternate_titles[] | "{\"uid\":\"\(.game_id)\",\"title\":\"\(.title)\",\"subtitle\":\"Alternate title\",\"valid\":\"false\"}" ' );
+
+echo "{\"items\": [";
+echo -n "$GAMES" | tr "\n" ',';
+#echo -n "$ALTS" | tr "\n" ',';
+echo "]}";</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Search by title</string>
+				<key>title</key>
+				<string>Search Moby Games</string>
+				<key>type</key>
+				<integer>5</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>2D5FE2CB-4A50-4E55-A395-013A4C899A20</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>browser</key>
+				<string></string>
+				<key>skipqueryencode</key>
+				<false/>
+				<key>skipvarencode</key>
+				<false/>
+				<key>spaces</key>
+				<string></string>
+				<key>url</key>
+				<string></string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>D4972D3B-101D-4599-AD76-AEBEC681A02D</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>2D5FE2CB-4A50-4E55-A395-013A4C899A20</key>
+		<dict>
+			<key>xpos</key>
+			<real>40</real>
+			<key>ypos</key>
+			<real>30</real>
+		</dict>
+		<key>D4972D3B-101D-4599-AD76-AEBEC681A02D</key>
+		<dict>
+			<key>xpos</key>
+			<real>365</real>
+			<key>ypos</key>
+			<real>30</real>
+		</dict>
+	</dict>
+	<key>userconfigurationconfig</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string></string>
+				<key>placeholder</key>
+				<string>moby_abcdef1234567890</string>
+				<key>required</key>
+				<true/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>Sign in to Moby Games, view your user profile, click the "API" link underneath it, fill in the form "for personal use" and submit, you'll then see your personal API Key.</string>
+			<key>label</key>
+			<string>Moby Games API Key</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>MG_API_KEY</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>mgt</string>
+				<key>placeholder</key>
+				<string>mgt</string>
+				<key>required</key>
+				<true/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string></string>
+			<key>label</key>
+			<string>Search by title keyword</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>search_title_keyword</string>
+		</dict>
+	</array>
+	<key>version</key>
+	<string>0.1</string>
+	<key>webaddress</key>
+	<string>http://www.gingerbeardman.com</string>
+</dict>
+</plist>
