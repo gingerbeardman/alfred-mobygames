@@ -52,7 +52,7 @@
 				<key>queuedelayimmediatelyinitially</key>
 				<true/>
 				<key>queuedelaymode</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>queuemode</key>
 				<integer>1</integer>
 				<key>runningsubtext</key>
@@ -65,11 +65,8 @@ JSON=$(echo $RAW | tr "\n" " ");
 
 GAMES=$(echo $JSON | jq -r ' .games[] | "{\"uid\":\"\(.game_id)\",\"title\":\"\(.title)\",\"subtitle\":\"\(.platforms[].platform_name)\",\"arg\":\"\(.moby_url)\",\"quicklookurl\":\"\(.moby_url)\",\"text\":{\"copy\":\"\(.title) \(.moby_url)\"}}" ' );
 
-#ALTS=$(echo $JSON | jq -r ' .games[].alternate_titles[] | "{\"uid\":\"\(.game_id)\",\"title\":\"\(.title)\",\"subtitle\":\"Alternate title\",\"valid\":\"false\"}" ' );
-
 echo "{\"items\": [";
 echo -n "$GAMES" | tr "\n" ',';
-#echo -n "$ALTS" | tr "\n" ',';
 echo "]}";</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
@@ -159,7 +156,7 @@ echo "]}";</string>
 			<key>config</key>
 			<dict>
 				<key>default</key>
-				<string>mgt</string>
+				<string>mgs</string>
 				<key>placeholder</key>
 				<string>mgt</string>
 				<key>required</key>
@@ -177,6 +174,8 @@ echo "]}";</string>
 			<string>search_title_keyword</string>
 		</dict>
 	</array>
+	<key>variablesdontexport</key>
+	<array/>
 	<key>version</key>
 	<string>0.1</string>
 	<key>webaddress</key>
