@@ -11,7 +11,10 @@ Alfred workflow for Moby Games search
 
 ## Future
 
-I'd like to display Alternate Titles, so foreign titles can be seen.
+I'd like to add the following
+- image thumbnails, so the correct game can more easily be chosen
+- display Alternate Titles, so foreign titles can be seen
+- release information like year and country
 
 ### Note
 You'll need to configure the workflow with your own API Key - easily done, instructions are included.
