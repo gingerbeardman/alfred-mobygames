@@ -54,26 +54,40 @@
 				<key>queuedelaymode</key>
 				<integer>1</integer>
 				<key>queuemode</key>
-				<integer>1</integer>
+				<integer>2</integer>
 				<key>runningsubtext</key>
 				<string></string>
 				<key>script</key>
-				<string>API_KEY="{var:api_key}";
+				<string>API_KEY="{var:api_key}"
+
+[[ -d "${alfred_workflow_data}" ]] || mkdir "${alfred_workflow_data}"
+export CACHE="${alfred_workflow_data}"
 
 RAW=$(curl --silent "https://api.mobygames.com/v1/games?api_key=${MG_API_KEY}&amp;title={query}")
-JSON=$(echo $RAW | tr "\n" " ");
+JSON=$(echo $RAW | tr "\n" " ")
 
-GAMES=$(echo $JSON | jq -r ' .games[] | "{\"uid\":\"\(.game_id)\",\"title\":\"\(.title)\",\"subtitle\":\"\(.platforms[].platform_name)\",\"arg\":\"\(.moby_url)\",\"quicklookurl\":\"\(.moby_url)\",\"text\":{\"copy\":\"\(.title) \(.moby_url)\"}}" ' );
+#IMGS=$(echo $JSON | jq '.games[].sample_cover.thumbnail_image' );
+#while IFS= read -r line; do
+#	filename=`echo -n "${line//\"/}"`
+#	filename=${filename#"https://cdn.mobygames.com/"}
+#	cache_file="${alfred_workflow_data}/${filename}"
+#	curl "${line//\"/}" &gt; $cache_file
+#done &lt;&lt;&lt; "$IMGS"
 
-echo "{\"items\": [";
-echo -n "$GAMES" | tr "\n" ',';
-echo "]}";</string>
+GAMES=$(echo $JSON | jq -r ' .games[] | "{\"uid\":\"\(.game_id)\",\"title\":\"\(.title)\",\"subtitle\":\"\(.platforms[].platform_name)\",\"arg\":\"\(.moby_url)\",\"quicklookurl\":\"\(.moby_url)\",\"text\":{\"copy\":\"\(.moby_url)\"},\"mods\":{\"cmd\":{\"valid\":\"true\",\"arg\":\"\(.moby_url)\",\"subtitle\":\"\(.moby_url)\"}}}" ' )
+
+#,\"icon\":{\"url\":\"$CACHE/$FILE\"}
+
+echo "{\"items\": ["
+echo -n "$GAMES" | envsubst | tr "\n" ','
+echo "]}"
+</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
 				<string></string>
 				<key>subtext</key>
-				<string>Search by title</string>
+				<string>Search by game title</string>
 				<key>title</key>
 				<string>Search Moby Games</string>
 				<key>type</key>
@@ -156,7 +170,7 @@ echo "]}";</string>
 			<key>config</key>
 			<dict>
 				<key>default</key>
-				<string>mgs</string>
+				<string>moby</string>
 				<key>placeholder</key>
 				<string>mgt</string>
 				<key>required</key>
@@ -177,7 +191,7 @@ echo "]}";</string>
 	<key>variablesdontexport</key>
 	<array/>
 	<key>version</key>
-	<string>0.1</string>
+	<string>0.2</string>
 	<key>webaddress</key>
 	<string>http://www.gingerbeardman.com</string>
 </dict>
