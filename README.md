@@ -17,4 +17,4 @@ I'd like to add the following
 - release information like year and country
 
 ### Note
-You'll need to configure the workflow with your own API Key - easily done, instructions are included.
+You'll need to configure the workflow with your own API Key - easily done, instructions are included during installation.
