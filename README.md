@@ -6,9 +6,9 @@ Alfred workflow for Moby Games search
 
 1. **Search Games**  
     Results
-    - title
-    - platform
-    - url (hold cmd to show)
+    - Game Title
+    - Platform
+    - URL (hold cmd to show)
     - open URL (press enter)
 
 ## Future
