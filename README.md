@@ -8,7 +8,8 @@ Alfred workflow for Moby Games search
     Results
     - title
     - platform
-    - url (press enter)
+    - url (hold cmd to show)
+    - open URL (press enter)
 
 ## Future
 
